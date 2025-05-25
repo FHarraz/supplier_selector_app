@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Supplier Dataset</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+            max-width: 600px;
+        }
+        .card {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .alert {
+            font-size: 0.9rem;
+        }
+        .footer-text {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="card bg-white">
+            <h2 class="text-center mb-4">AI-Based Supplier Selector</h2>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Upload your dataset (CSV format)</label>
+                    <input class="form-control" type="file" id="file" name="file" required>
+                    <div class="form-text text-muted mt-2">
+                        ⚠️ <strong>Required columns:</strong>
+                        <ul class="mb-0">
+                            <li><strong>Sales per Unit</strong></li>
+                            <li><strong>Quantity</strong></li>
+                            <li><strong>Rating</strong></li>
+                            <li><strong>Review</strong> (for sentiment analysis)</li>
+                        </ul>
+                        ✅ <strong>Optional but recommended:</strong> <em>Supplier ID</em> or <em>Supplier Name</em> for better aggregation.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Analyze and Rank Suppliers</button>
+            </form>
+            <p class="footer-text text-center">Built to enhance supplier evaluation with AI and decision science.</p>
+        </div>
+    </div>
+</body>
+</html>
